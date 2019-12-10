@@ -21,8 +21,10 @@ photos
 
 messages
    .defaults({
-      messages: [],
-      tweeted: [],
+      new: [],
+      old: [],
+      texts: [],
+      last_index: 0,
       cursor: 0
    })
    .write();

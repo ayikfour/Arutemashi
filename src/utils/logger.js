@@ -2,7 +2,7 @@ import chalk from "chalk";
 import moment from "moment";
 const log = console.log;
 
-export default function(context) {
+export default function(context = "") {
    var context = context.toUpperCase();
    var time = moment()
       .format("h:mm:ss a")
@@ -10,20 +10,24 @@ export default function(context) {
 
    var logger = {
       error: function(message = "") {
-         log(time, chalk.red("ERROR", context));
-         log(time, chalk.red(context), message);
+         log(chalk.red(time), "-", chalk.red("ERROR:"), message);
          return this;
       },
       success: function(message = "") {
-         log(time, chalk.green("SUCCESS"), chalk.grey(context), message);
+         log(chalk.green(time), "-", chalk.green("SUCCESS:"), message);
          return this;
       },
-      header: function(message = "") {
-         log(time, chalk.magenta.bold(context, message));
+      header: function() {
+         log(chalk.magenta(time), "-", chalk.magenta.bold(context));
          return this;
       },
       process: function(subcontext = "", message = "") {
-         log(time, chalk.yellow(subcontext.toUpperCase()), message);
+         log(
+            chalk.white(time),
+            "-",
+            chalk.white(subcontext.toUpperCase() + ":"),
+            message
+         );
          return this;
       }
    };
