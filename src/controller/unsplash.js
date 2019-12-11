@@ -2,6 +2,7 @@ import CONFIG from "../config/config";
 import Unsplash, { toJson } from "unsplash-js";
 import download from "../utils/download";
 import db from "../helper/database";
+import fs from "fs";
 import logger from "../utils/logger";
 
 const context = {
@@ -143,5 +144,23 @@ async function download_photo(photo, option = CONFIG.downloads.regular) {
    }
 }
 
-async function delete_photo() {}
-export default { get_photos, download_photo, get_random_photo };
+async function delete_photos() {
+   const log = logger("delete photos");
+   log.header();
+   try {
+      const photos = db.photos.get("photos").value();
+      log.process("deleteing", "photos from public/photos dir");
+
+      let deleted = 0;
+      photos.map(async photo => {
+         if (!photo.downloaded) return;
+         let path = `./src/public/photos/${photo.id}.jpg`;
+         await fs.unlinkSync(path);
+         deleted++;
+      });
+
+      log.success(`${deleted} photos has been deleted`);
+   } catch (error) {}
+}
+
+export default { get_photos, download_photo, get_random_photo, delete_photos };
