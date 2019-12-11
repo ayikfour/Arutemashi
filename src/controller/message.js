@@ -2,6 +2,8 @@ import CONFIG from "../config/config";
 import logger from "../utils/logger";
 import Twit from "twit";
 import db from "../helper/database";
+import image from "./image";
+import tweet from "./tweet";
 
 const twit = new Twit(CONFIG.twitter);
 const context = {
@@ -113,6 +115,7 @@ async function consume_messages() {
       messages.forEach(event => {
          let id = event.id;
          let text = event.message_create.message_data.text;
+         let user_id = event.message_create.sender_id;
          let split = text.split(" ");
 
          log.process("event", `id: ${id}`).process("event", `text: ${text}`);
@@ -125,7 +128,7 @@ async function consume_messages() {
             // save to texts array in database
             db.messages
                .get("texts")
-               .push(text)
+               .push({ text, user_id })
                .write();
          }
 
@@ -141,7 +144,66 @@ async function consume_messages() {
    }
 }
 
+async function tweet_messages() {
+   const log = logger("tweet message");
+   log.header();
+   try {
+      if (is_text_empty()) {
+         throw new Error("there is nothing to tweet");
+      }
+
+      const { text, user_id } = db.messages
+         .get("texts")
+         .tail()
+         .value();
+
+      log.process("drawing", "text on photo");
+      const media = await image.draw(text);
+
+      log.process("tweeting", "upload media to twitter");
+      const {
+         data: { media_id_string }
+      } = await twit.post("media/upload", { media_data: media });
+
+      log.process("tweeting", "media as a tweet");
+      const params = { status: "/arute,jpg/", media_ids: [media_id_string] };
+      const {
+         data: { id_str }
+      } = await twit.post("statuses/update", params);
+
+      await tweet.reply_to(id_str, user_id);
+
+      move_text();
+      log.success("message has been tweeted!");
+   } catch (error) {
+      log.error(error.message);
+   }
+}
+
+function move_text() {
+   const text = db.messages
+      .get("texts")
+      .head()
+      .value();
+
+   db.messages
+      .get("tweeted")
+      .push(text)
+      .write();
+
+   db.messages
+      .get("texts")
+      .pop()
+      .write();
+}
+
+function is_text_empty() {
+   const texts = db.messages.get("texts").value().length;
+   return texts == 0;
+}
+
 export default {
    get_messages,
-   consume_messages
+   consume_messages,
+   tweet_messages
 };

@@ -1,7 +1,6 @@
 import unsplash from "./controller/unsplash";
 import cron from "node-cron";
 import mock from "./controller/mock";
-import image from "./controller/image";
 import message from "./controller/message";
 import CONFIG from "./config/config";
 
@@ -12,41 +11,33 @@ function mocking() {
    console.log(result);
 }
 
-async function collecting() {
-   await unsplash.get_photos();
-}
-
-async function downloading() {
-   await unsplash.download_photo(CONFIG.downloads.regular);
-}
-
 const bot = {
    mocking: function() {
       let task = cron.schedule("*/10 * * * * *", () => mocking());
       return task;
    },
-   collect_photo: function() {
-      let task = cron.schedule("*/1 * * * *", () => collecting());
-      return task;
-   },
-   download_photo: function() {
-      let task = cron.schedule("*/15 * * * * *", () => downloading());
-      return task;
-   },
-   captioning: function() {
-      image.draw(
-         "yes, hello? what is the password? i love you for 10000 years"
-      );
-   },
-   stream_message: function() {
-      let task = cron.schedule("*/2 * * * *", async () => {
-         await message.get_messages();
+   arute_harvest: function() {
+      let task = cron.schedule("*/30 * * * *", async () => {
+         await unsplash.get_photos();
       });
       return task;
    },
-   consume_message: function() {
-      let task = cron.schedule("*/1 * * * *", async () => {
+   delete_photos: function() {
+      let task = cron.schedule("* */5 * * *", async () => {
+         await unsplash.delete_photos();
+      });
+      return task;
+   },
+   arute_message: function() {
+      let task = cron.schedule("*/2 * * * *", async () => {
+         await message.get_messages();
          await message.consume_messages();
+      });
+      return task;
+   },
+   arute_jpg: function() {
+      let task = cron.schedule("*/1 * * * *", async () => {
+         await message.tweet_messages();
       });
       return task;
    }
