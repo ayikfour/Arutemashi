@@ -29,16 +29,14 @@ async function get_messages() {
       } = await twit.get("direct_messages/events/list", param);
 
       //Writing next events to messages db
-      log.process("updating", `store ${events.length} events in database`);
       update_messages(events);
 
       //Writing next counter to messages db
-      log.process("updating", `next cursor`);
       update_cursor(next_cursor);
+
+      log.success("getting messages is done");
    } catch (error) {
       log.error(error.messages);
-   } finally {
-      log.success("everything's set!");
    }
 }
 
@@ -108,7 +106,7 @@ async function consume_messages() {
       let messages = [...db.messages.get("new").value()];
 
       // if messages length is 0, then nothing to consume
-      if (messages.length == 0) throw new Error("nothing to consume :(");
+      if (messages.length == 0) throw new Error("nothing to consume");
 
       // get texts from new messages entry
       // then saved it into database
@@ -154,10 +152,10 @@ async function tweet_messages() {
 
       const { text, user_id } = db.messages
          .get("texts")
-         .tail()
+         .head()
          .value();
 
-      log.process("drawing", "text on photo");
+      log.process("drawing", `text ${text} on photo`);
       const media = await image.draw(text);
 
       log.process("tweeting", "upload media to twitter");
@@ -193,7 +191,7 @@ function move_text() {
 
    db.messages
       .get("texts")
-      .pop()
+      .shift()
       .write();
 }
 
