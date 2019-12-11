@@ -24,6 +24,7 @@ messages
       new: [],
       old: [],
       texts: [],
+      tweeted: [],
       last_index: 0,
       cursor: 0
    })

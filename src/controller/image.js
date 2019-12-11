@@ -1,13 +1,22 @@
 import jimp from "jimp";
+import fs from "fs";
+import unsplash from "./unsplash";
 
-async function draw(caption = "", id = "untitled") {
+async function draw(caption = "") {
    try {
       const font = await jimp.loadFont(
-         "./src/public/fonts/arial_16_yellow.fnt"
+         "./src/public/fonts/arial_32_yellow.fnt"
       );
 
-      const image = await jimp.read(`./src/public/images/${id}.jpg`);
-      await image.color([{ apply: "greyscale", params: [100] }]);
+      let photo = unsplash.get_random_photo();
+      await unsplash.download_photo(photo);
+
+      const image = await jimp.read(`./src/public/photos/${photo.id}.jpg`);
+      await image.color([
+         { apply: "greyscale", params: [100] },
+         { apply: "darken", params: [15] }
+      ]);
+
       await image.print(
          font,
          100,
@@ -20,8 +29,12 @@ async function draw(caption = "", id = "untitled") {
          image.bitmap.width - 200,
          image.bitmap.height
       );
-      await image.write(`./src/public/drawen/imgs.jpg`);
-      console.log("Written!");
+
+      const path = `./src/public/drawen/${photo.id}.jpg`;
+      await image.writeAsync(path);
+
+      const photo_b64 = await fs.readFileSync(path, { encoding: "base64" });
+      return photo_b64;
    } catch (error) {
       console.log(error);
    }

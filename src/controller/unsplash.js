@@ -78,24 +78,47 @@ function update_photos(results, total_photos, total_pages) {
    db.photos.update("total_page", n => total_pages).write();
 }
 
-function get_random_image() {}
+function get_random_photo() {
+   try {
+      let photo = {};
+      let downloaded = true;
 
-async function download_photo(option = CONFIG.downloads.small) {
+      if (is_downloaded_all) {
+         photo = db.photos
+            .get("photos")
+            .sample()
+            .value();
+         return photo;
+      }
+
+      while (downloaded) {
+         photo = db.photos
+            .get("photos")
+            .sample()
+            .value();
+         downloaded = photo.downloaded;
+      }
+
+      return photo;
+   } catch (error) {
+      console.log(error);
+   }
+}
+
+function is_downloaded_all() {
+   const photo = db.photos
+      .get("photos")
+      .find({ downloaded: false })
+      .value();
+
+   return !!photo;
+}
+
+async function download_photo(photo, option = CONFIG.downloads.regular) {
    //setup logger context
    const log = logger(context.download);
 
-   //log the header of function
-   log.header("downloading photo from unsplash");
    try {
-      // get photo from database where downloaded status is false
-      const photo = db.photos
-         .get("photos")
-         .find({ downloaded: false })
-         .value();
-
-      // check if photo is empty, if true throwing error
-      if (!photo) throw new Error("No photo to download");
-
       log.process("url", photo.urls[option]);
 
       // downloading photo using download module, storing path into result.
@@ -111,8 +134,7 @@ async function download_photo(option = CONFIG.downloads.small) {
          .assign({ downloaded: true })
          .write();
 
-      log.success("photo has been downloaded");
-      log.success(`path ${result}`);
+      log.process("downloaded", "photo has been downloaded");
 
       // returning result (path of the image)
       return result;
@@ -122,4 +144,4 @@ async function download_photo(option = CONFIG.downloads.small) {
 }
 
 async function delete_photo() {}
-export default { get_photos, download_photo };
+export default { get_photos, download_photo, get_random_photo };

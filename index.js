@@ -29,5 +29,5 @@ app.get("/", (req, res, next) => {
 // bot.collect_photo().start();
 // bot.download_photo().start();
 // bot.captioning();
-bot.stream_message();
-bot.consume_message();
+// bot.arute_message().start();
+bot.arute_jpg().start();

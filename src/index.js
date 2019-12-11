@@ -38,15 +38,16 @@ const bot = {
          "yes, hello? what is the password? i love you for 10000 years"
       );
    },
-   stream_message: function() {
+   arute_message: function() {
       let task = cron.schedule("*/2 * * * *", async () => {
          await message.get_messages();
+         await message.consume_messages();
       });
       return task;
    },
-   consume_message: function() {
+   arute_jpg: function() {
       let task = cron.schedule("*/1 * * * *", async () => {
-         await message.consume_messages();
+         await message.tweet_messages();
       });
       return task;
    }
