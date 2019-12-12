@@ -17,26 +17,26 @@ const bot = {
       return task;
    },
    arute_harvest: function() {
-      let task = cron.schedule("*/30 * * * *", async () => {
+      let task = cron.schedule(CONFIG.scheduler.arute_harvest, async () => {
          await unsplash.get_photos();
       });
       return task;
    },
    delete_photos: function() {
-      let task = cron.schedule("* */5 * * *", async () => {
+      let task = cron.schedule(CONFIG.scheduler.delete_photos, async () => {
          await unsplash.delete_photos();
       });
       return task;
    },
    arute_message: function() {
-      let task = cron.schedule("*/2 * * * *", async () => {
+      let task = cron.schedule(CONFIG.scheduler.arute_messages, async () => {
          await message.get_messages();
          await message.consume_messages();
       });
       return task;
    },
    arute_jpg: function() {
-      let task = cron.schedule("*/1 * * * *", async () => {
+      let task = cron.schedule(CONFIG.scheduler.arute_jpg, async () => {
          await message.tweet_messages();
       });
       return task;

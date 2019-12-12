@@ -46,5 +46,11 @@ module.exports = {
       api_key:
          process.env.TUMBLR_API_KEY ||
          "EzdMIbOg33ANNvG85sWwWD2T9lgRQh4tjJavAl1xDK0363Ku0b"
+   },
+   scheduler: {
+      delete_photos: process.env.DELETE_PHOTOS || "0 */5 * * *",
+      arute_messages: process.env.ARUTE_MESSAGES || "*/2 * * * *",
+      arute_jpg: process.env.ARUTE_JPG || "*/1 * * * *",
+      arute_harvest: process.env.ARUTE_HARVEST || "*/1 * * * *"
    }
 };
