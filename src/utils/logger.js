@@ -11,7 +11,13 @@ export default function(context = "") {
             .format("h:mm:ss a")
             .toUpperCase();
 
-         log(chalk.red(time), "-", chalk.red("ERROR:"), message);
+         log(
+            chalk.red(time),
+            "-",
+            chalk.magenta.bold(context),
+            chalk.red("ERROR:"),
+            message
+         );
          return this;
       },
       success: function(message = "") {
@@ -19,7 +25,13 @@ export default function(context = "") {
             .format("h:mm:ss a")
             .toUpperCase();
 
-         log(chalk.green(time), "-", chalk.green("SUCCESS:"), message);
+         log(
+            chalk.green(time),
+            "-",
+            chalk.magenta.bold(context),
+            chalk.green("SUCCESS:"),
+            message
+         );
          return this;
       },
       header: function() {
@@ -36,9 +48,10 @@ export default function(context = "") {
             .toUpperCase();
 
          log(
-            chalk.white(time),
+            chalk.yellow(time),
             "-",
-            chalk.white(subcontext.toUpperCase() + ":"),
+            chalk.magenta.bold(context),
+            chalk.yellow(subcontext.toUpperCase() + ":"),
             message
          );
          return this;

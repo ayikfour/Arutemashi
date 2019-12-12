@@ -13,7 +13,7 @@ function mocking() {
 
 const bot = {
    mocking: function() {
-      let task = cron.schedule("*/10 * * * * *", () => mocking());
+      let task = cron.schedule(CONFIG.scheduler.arute_jpg, () => mocking());
       return task;
    },
    arute_harvest: function() {

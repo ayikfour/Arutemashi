@@ -17,7 +17,6 @@ const unsplash = new Unsplash({
 
 async function get_photos() {
    const log = logger(context.get);
-   log.header();
    try {
       let keywords = db.photos.get("keywords").value();
       let page = db.photos.get("page").value();
@@ -116,7 +115,6 @@ function is_downloaded_all() {
 async function download_photo(photo, option = CONFIG.downloads.regular) {
    //setup logger context
    const log = logger(context.download);
-
    try {
       log.process("url", photo.urls[option]);
 
@@ -144,7 +142,6 @@ async function download_photo(photo, option = CONFIG.downloads.regular) {
 
 async function delete_photos() {
    const log = logger("delete photos");
-   log.header();
    try {
       const photos = db.photos.get("photos").value();
       log.process("deleteing", "photos from public/photos dir");

@@ -13,7 +13,6 @@ const context = {
 
 async function get_messages() {
    const log = logger(context.get);
-   log.header();
    try {
       //creating params based on entry.
       //if entry is equal to max (or 20), param next_cursor is set
@@ -100,7 +99,6 @@ function move_message(message_id = "") {
 
 async function consume_messages() {
    const log = logger(context.consume);
-   log.header();
    try {
       // get new messages array
       let messages = [...db.messages.get("new").value()];
@@ -116,7 +114,7 @@ async function consume_messages() {
          let user_id = event.message_create.sender_id;
          let split = text.split(" ");
 
-         log.process("event", `id: ${id}`).process("event", `text: ${text}`);
+         log.process("messages", `text: ${text}`);
 
          // check wether the string contain right tokens
          if (split[0] == "/arute.jpg/") {
@@ -132,7 +130,7 @@ async function consume_messages() {
 
          // movin message from new messages array
          // to the old messages array
-         log.process("moving", `moving new messages id ${id} to olds`);
+         log.process("move", `moving ${text}`);
          move_message(id);
       });
 
@@ -144,7 +142,6 @@ async function consume_messages() {
 
 async function tweet_messages() {
    const log = logger("tweet message");
-   log.header();
    try {
       if (is_text_empty()) {
          throw new Error("there is nothing to tweet");
@@ -155,7 +152,6 @@ async function tweet_messages() {
          .head()
          .value();
 
-      log.process("drawing", `text ${text} on photo`);
       const media = await image.draw(text);
 
       log.process("tweeting", "upload media to twitter");
@@ -163,7 +159,7 @@ async function tweet_messages() {
          data: { media_id_string }
       } = await twit.post("media/upload", { media_data: media });
 
-      log.process("tweeting", "media as a tweet");
+      log.process("tweeting", `/arute.jpg/ ${text}`);
       const params = { status: "/arute,jpg/", media_ids: [media_id_string] };
       const {
          data: { id_str }
