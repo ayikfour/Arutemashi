@@ -7,7 +7,8 @@ async function photo(url = "", id = "") {
    try {
       let options = {
          url: url,
-         dest: Path.resolve(__dirname, "../public/photos/", `${id}.jpg`)
+         // dest: Path.resolve(__dirname, "../public/photos/", `${id}.jpg`)
+         dest: `./src/public/photos/${id}.jpg`
       };
 
       const { filename, image } = await download.image(options);

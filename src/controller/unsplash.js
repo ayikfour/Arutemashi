@@ -17,7 +17,7 @@ const unsplash = new Unsplash({
 
 async function get_photos() {
    const log = logger(context.get);
-   log.header("Fetching photo from unsplash");
+   log.header();
    try {
       let keywords = db.photos.get("keywords").value();
       let page = db.photos.get("page").value();
@@ -32,15 +32,13 @@ async function get_photos() {
 
       let { results, total, total_pages } = await toJson(response);
 
-      log.success(`fetched ${results.length} photos from ${total}`);
-
       if (!results) throw new Error("Results is empty, try fetching again.");
 
       results = clean_photos(results);
 
       update_photos(results, total, total_pages);
 
-      log.success("All data has been saved");
+      log.success(`fetched ${results.length} photos from ${total}`);
    } catch (error) {
       log.error(error.message);
    }

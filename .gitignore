@@ -1,3 +1,4 @@
 node_modules
 src/public/drawen
 src/public/photos
+src/helper/database
