@@ -3,6 +3,8 @@ import cron from "node-cron";
 import mock from "./controller/mock";
 import message from "./controller/message";
 import CONFIG from "./config/config";
+import observer from "./controller/observer";
+import tweet from "./controller/tweet";
 
 function mocking() {
    let result = mock.sircistic(
@@ -12,6 +14,9 @@ function mocking() {
 }
 
 const bot = {
+   arute_observe: async function() {
+      await observer.get_user("paswotnya");
+   },
    mocking: function() {
       let task = cron.schedule(CONFIG.scheduler.arute_jpg, () => mocking());
       return task;
@@ -37,7 +42,7 @@ const bot = {
    },
    arute_jpg: function() {
       let task = cron.schedule(CONFIG.scheduler.arute_jpg, async () => {
-         await message.tweet_messages();
+         await message.arute_jpg();
       });
       return task;
    }

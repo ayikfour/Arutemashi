@@ -20,7 +20,9 @@ module.exports = {
          "1171122850549252096-IQcgpX5nEm2DLTXtHgsshEBCTJYREO",
       access_token_secret:
          process.env.TWITTER_ACCESS_TOKEN_SECRET ||
-         "GXvjW6U62BOcm54PxWfZffKoMvmTBQrUfGWpDnX0Dq6vw"
+         "GXvjW6U62BOcm54PxWfZffKoMvmTBQrUfGWpDnX0Dq6vw",
+      id_self: "1171122850549252096",
+      id_kamisama: "811526869233201152"
    },
    unsplash: {
       access_key:
@@ -29,6 +31,11 @@ module.exports = {
       secret_key:
          process.env.UNSPLASH_SECRET_KEY ||
          "b007ef851362aed886f5304ce0afd6088ba8c834b5e6e94c77a7d4d515581280"
+   },
+   pinterest: {
+      access_token:
+         process.env.PINTERES_ACCESS_TOKEN ||
+         "Aor5ZvebrQAiTSCg_AcW7rDbhZqHFd-cTtiVpE1GJEsFIgCxTQNZADAAANjHRmDO_hSgv0IAAAAA"
    },
    tumblr: {
       consumer_key:

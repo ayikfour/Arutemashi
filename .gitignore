@@ -1,6 +1,7 @@
 node_modules
-src/public/drawen
-src/public/photos
+src/public/drawen/*
+src/public/photos/*
 src/helper/database/photos_db.json
 src/helper/database/messages_db.json
+src/helper/database/*.json
 .env

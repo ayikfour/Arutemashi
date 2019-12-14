@@ -25,7 +25,8 @@ app.get("/", (req, res, next) => {
    });
 });
 
-bot.arute_jpg().start();
-bot.arute_harvest().start();
-bot.arute_message().start();
-bot.delete_photos().start();
+// bot.arute_jpg().start();
+// bot.arute_harvest().start();
+// bot.arute_message().start();
+// bot.delete_photos().start();
+bot.arute_observe();

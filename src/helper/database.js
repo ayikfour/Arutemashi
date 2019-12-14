@@ -7,6 +7,9 @@ const photos = low(adapter_photos);
 const adapter_messages = new FileSync("./src/helper/database/messages_db.json");
 const messages = low(adapter_messages);
 
+const adapter_tweets = new FileSync("./src/helper/database/tweets_db.json");
+const tweets = low(adapter_tweets);
+
 photos
    .defaults({
       photos: [],
@@ -30,4 +33,15 @@ messages
    })
    .write();
 
-export default { photos, messages };
+tweets
+   .defaults({
+      new: [],
+      old: [],
+      texts: [],
+      tweeted: [],
+      max_id: 0,
+      since_id: 0
+   })
+   .write();
+
+export default { photos, messages, tweets };

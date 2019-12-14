@@ -20,11 +20,8 @@ async function get_photos() {
    try {
       let keywords = db.photos.get("keywords").value();
       let page = db.photos.get("page").value();
-      let current_total_page = db.photos.get("total_page").value();
 
-      log.process("keywords", `${keywords}`);
-      log.process("page", `${page} from ${current_total_page} pages`);
-
+      log.process("fetching:", `${keyowrds} photos from Unsplash`);
       let response = await unsplash.search.photos(keywords, page, 30, {
          orientation: "landscape"
       });
@@ -81,7 +78,11 @@ function get_random_photo() {
       let photo = {};
       let downloaded = true;
 
-      if (is_downloaded_all) {
+      if (is_photos_empty()) {
+         throw new Error("there is no photo currently");
+      }
+
+      if (is_downloaded_all()) {
          photo = db.photos
             .get("photos")
             .sample()
@@ -99,7 +100,7 @@ function get_random_photo() {
 
       return photo;
    } catch (error) {
-      console.log(error);
+      throw error;
    }
 }
 
@@ -110,6 +111,14 @@ function is_downloaded_all() {
       .value();
 
    return !!photo;
+}
+
+function is_photos_empty() {
+   const photo = db.photos
+      .get("photos")
+      .isEmpty()
+      .value();
+   return photo;
 }
 
 async function download_photo(photo, option = CONFIG.downloads.regular) {
@@ -136,7 +145,7 @@ async function download_photo(photo, option = CONFIG.downloads.regular) {
       // returning result (path of the image)
       return result;
    } catch (error) {
-      log.error(error.message);
+      throw error;
    }
 }
 

@@ -14,7 +14,8 @@ async function draw(caption = "") {
       const image = await jimp.read(`./src/public/photos/${photo.id}.jpg`);
       await image.color([
          { apply: "greyscale", params: [100] },
-         { apply: "darken", params: [15] }
+         { apply: "darken", params: [5] },
+         { apply: "shade", params: [20] }
       ]);
 
       await image.print(
@@ -36,7 +37,7 @@ async function draw(caption = "") {
       const photo_b64 = await fs.readFileSync(path, { encoding: "base64" });
       return photo_b64;
    } catch (error) {
-      console.log(error);
+      throw error;
    }
 }
 
