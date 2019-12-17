@@ -59,5 +59,10 @@ module.exports = {
       arute_messages: process.env.ARUTE_MESSAGES || "*/2 * * * *",
       arute_jpg: process.env.ARUTE_JPG || "*/1 * * * *",
       arute_harvest: process.env.ARUTE_HARVEST || "*/1 * * * *"
+   },
+   selector: {
+      arute_jpg: "/arute.jpg/",
+      sarcastify: "/sarcastify/",
+      sircistify: "/sircistify"
    }
 };

@@ -29,4 +29,4 @@ app.get("/", (req, res, next) => {
 // bot.arute_harvest().start();
 // bot.arute_message().start();
 // bot.delete_photos().start();
-bot.arute_observe();
+bot.arute_observe().start();

@@ -95,19 +95,22 @@ const build = {
    tweet: function(tweet = {}) {
       const {
          id,
+         id_str,
          text,
-         in_reply_to_status_id,
-         in_reply_to_user_id,
+         in_reply_to_status_id_str,
+         in_reply_to_user_id_str,
          in_reply_to_screen_name,
          retweet_count,
          favorite_count,
          user: { screen_name, id: user_id }
       } = tweet;
+
       return {
          id,
+         id_str,
          text,
-         in_reply_to_status_id,
-         in_reply_to_user_id,
+         in_reply_to_status_id_str,
+         in_reply_to_user_id_str,
          in_reply_to_screen_name,
          retweet_count,
          favorite_count,

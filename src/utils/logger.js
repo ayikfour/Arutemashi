@@ -4,6 +4,7 @@ const log = console.log;
 
 export default function(context = "") {
    var context = context.toUpperCase();
+   var padding = 10;
 
    var logger = {
       error: function(message = "") {
@@ -14,7 +15,7 @@ export default function(context = "") {
          log(
             chalk.red(time),
             "-",
-            chalk.magenta.bold(context),
+            chalk.magenta.bold(context.padEnd(padding)),
             chalk.red("ERROR:"),
             message
          );
@@ -28,7 +29,7 @@ export default function(context = "") {
          log(
             chalk.green(time),
             "-",
-            chalk.magenta.bold(context),
+            chalk.magenta.bold(context.padEnd(padding)),
             chalk.green("SUCCESS:"),
             message
          );
@@ -39,7 +40,11 @@ export default function(context = "") {
             .format("h:mm:ss a")
             .toUpperCase();
 
-         log(chalk.magenta(time), "-", chalk.magenta.bold(context));
+         log(
+            chalk.magenta(time),
+            "-",
+            chalk.magenta.bold(context.padEnd(padding))
+         );
          return this;
       },
       process: function(subcontext = "", message = "") {
@@ -50,7 +55,7 @@ export default function(context = "") {
          log(
             chalk.yellow(time),
             "-",
-            chalk.magenta.bold(context),
+            chalk.magenta.bold(context.padEnd(padding)),
             chalk.yellow(subcontext.toUpperCase() + ":"),
             message
          );

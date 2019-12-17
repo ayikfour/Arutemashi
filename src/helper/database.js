@@ -39,8 +39,9 @@ tweets
       old: [],
       texts: [],
       tweeted: [],
-      max_id: 0,
-      since_id: 0
+      max_id: undefined,
+      since_id: undefined,
+      max_id_overall: undefined
    })
    .write();
 
