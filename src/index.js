@@ -16,7 +16,8 @@ function mocking() {
 const bot = {
    arute_observe: function() {
       let task = cron.schedule("*/1 * * * *", async () => {
-         await observer.user("paswotnya");
+         // await observer.user("paswotnya");
+         await observer.mention()
          await observer.process();
       });
       return task;
