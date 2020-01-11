@@ -146,7 +146,11 @@ async function polaroid(caption = '') {
             </body>
          </html>
          `,
-         waitUntil: ['load', 'networkidle0']
+         waitUntil: ['load', 'networkidle0'],
+         puppeteerArgs: {
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+         }
       });
 
       const photo_b64 = await fs.readFileSync(path, { encoding: 'base64' });
@@ -256,7 +260,11 @@ async function tumblr(caption) {
             </body>
          </html>
          `,
-         waitUntil: ['load', 'networkidle0']
+         waitUntil: ['load', 'networkidle0'],
+         puppeteerArgs: {
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+         }
       });
 
       const photo_b64 = await fs.readFileSync(path, { encoding: 'base64' });

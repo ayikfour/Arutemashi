@@ -1,9 +1,10 @@
 import tweet from '../src/controller/tweet';
+import image from '../src/controller/image';
 
 async function test() {
    try {
-      const data = await tweet.get_tweet('1215312108214091776');
-      console.log(data);
+      await image.polaroid('Fuxk the police');
+      console.log('done');
    } catch (error) {
       console.log(error);
    }
