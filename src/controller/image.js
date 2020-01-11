@@ -19,7 +19,7 @@ async function polaroid(caption = '') {
                   
                   .container{
                      width: 1280;
-                     height: 1280;
+                     height: 960;
                      display: flex;
                      align-items: center;
                      justify-content: center;
