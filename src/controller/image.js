@@ -18,8 +18,8 @@ async function polaroid(caption = '') {
                <style>
                   
                   .container{
-                     width: 1080px;
-                     height: 1080px;
+                     width: 1280;
+                     height: 1280;
                      display: flex;
                      align-items: center;
                      justify-content: center;
@@ -34,13 +34,14 @@ async function polaroid(caption = '') {
                      flex-direction: column;
                      padding: 24px;
                      width: 720px;
-                     height: 880px;
+                     height: 560px;
                      background: white;
                   }
                   
                   .image-container{
                      width: inherit;
-                     height: calc(100% - 160px);
+                     height: inherit;
+                     min-height: calc(100% - 160px);
                      background-image: url("${photo.urls.regular}&monochrome=${color}");
                      background-size: cover;
                      background-position: center;
@@ -53,7 +54,7 @@ async function polaroid(caption = '') {
                   }
                   
                   .content{
-                     height: 160px;
+                     height: auto;
                      display: flex;
                      flex-direction: column;
                   }
@@ -64,8 +65,8 @@ async function polaroid(caption = '') {
                      height: inherit;
                      display: flex;
                      justify-content: center;
-                     padding-top: 8px;
-                     padding-bottom:8px;
+                     padding-top: 24px;
+                     padding-bottom: 24px;
                   }
                   
                   .words{

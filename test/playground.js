@@ -28,7 +28,7 @@ async function trains() {
 
 async function test() {
    try {
-      await image.tumblr('Bangsatttttt');
+      await image.polaroid('Bangsatttttt');
       console.log('done');
    } catch (error) {
       console.log(error);
