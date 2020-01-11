@@ -173,11 +173,11 @@ async function tumblr(caption) {
          <html lang="en">
             <head>
                <title>Hello!</title>
-               <link href="https://fonts.googleapis.com/css?family=Roboto:300i&display=swap" rel="stylesheet">
+               <link href="https://fonts.googleapis.com/css?family=Roboto:300i,400i&display=swap" rel="stylesheet">
                <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
                <style>
                   .image {
-                  height: calc(100% - 32px);
+                  height: inherit;
                   width: inherit;  
                   background: url("${photo.urls.regular}&monochrome=${color}");
                   background-size: cover;
@@ -188,8 +188,8 @@ async function tumblr(caption) {
                   }
                   
                   .container{
-                  height: 405px;
-                  width: 720px;
+                  height: 720px;
+                  width: 1280px;
                   display: flex;
                   flex-direction: column;
                   margin: 0 !important;
@@ -198,14 +198,14 @@ async function tumblr(caption) {
                   p {
                   font-family: 'Roboto', sans-serif;
                   text-align: center;
-                  font-size: 12px;
+                  font-size: 16px;
                   color: #ffd21f;
                   }
                   
                   p.words{
                   margin-bottom: 48px; 
                   overflow: hidden;
-                  font-size: 16px;
+                  font-size: 24px;
                   display: -webkit-box;
                   -webkit-line-clamp: 3;
                   -webkit-box-orient: vertical;
@@ -247,17 +247,7 @@ async function tumblr(caption) {
                   </span>
                   </p>
                </div>
-               
-               <div class="credit-container">
-                  <p class="title">
-                  arutemashi /.
-                  </p>
-                  
-                  <p class="unsplash-container">
-                        <span class="unsplash">unsplash</span>•<span class="author-container">photo by <span class="author">${photo.user}</span></span>
-                     </p>
-                  </div>
-               </div>
+             
             </body>
          </html>
          `,
@@ -270,7 +260,7 @@ async function tumblr(caption) {
 
       const photo_b64 = await fs.readFileSync(path, { encoding: 'base64' });
       // delete files
-      // await fs.unlinkSync(path);
+      await fs.unlinkSync(path);
       return photo_b64;
    } catch (error) {
       throw error;
