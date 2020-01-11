@@ -28,7 +28,9 @@ async function trains() {
 
 async function test() {
    try {
-      await image.polaroid('Bangsatttttt');
+      await image.polaroid(
+         'Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt'
+      );
       console.log('done');
    } catch (error) {
       console.log(error);

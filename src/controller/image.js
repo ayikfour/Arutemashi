@@ -33,15 +33,15 @@ async function polaroid(caption = '') {
                      display: flex;
                      flex-direction: column;
                      padding: 24px;
-                     width: 720px;
-                     height: 560px;
+                     width: 800px;
+                     height: 640px;
                      background: white;
                   }
                   
                   .image-container{
                      width: inherit;
                      height: inherit;
-                     min-height: calc(100% - 160px);
+                     min-height: calc(100% - 240px);
                      background-image: url("${photo.urls.regular}&monochrome=${color}");
                      background-size: cover;
                      background-position: center;
@@ -74,7 +74,7 @@ async function polaroid(caption = '') {
                      color: #000000;
                      text-transform: lowercase;
                      line-height: 150%;
-                     font-size: 16px;
+                     font-size: 20px;
                      text-align: center;
                      align-self: center;
                      overflow: hidden;
@@ -99,7 +99,7 @@ async function polaroid(caption = '') {
                   .credit-container{
                      align-self: flex-end;
                      color: #636363;
-                     letter-spacing: 0.1em;
+                     letter-spacing: 0.05em;
                      font-size: 12px;
                      text-transform: uppercase;
                      font-weight: 500;
