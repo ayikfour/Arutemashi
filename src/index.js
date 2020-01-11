@@ -1,24 +1,38 @@
-import unsplash from "./controller/unsplash";
-import cron from "node-cron";
-import mock from "./controller/mock";
-import message from "./controller/message";
-import CONFIG from "./config/config";
-import observer from "./controller/observer";
-import tweet from "./controller/tweet";
+import unsplash from './controller/unsplash';
+import cron from 'node-cron';
+import mock from './controller/mock';
+import message from './controller/message';
+import CONFIG from './config/config';
+import mention from './controller/mention';
+import tweet from './controller/tweet';
+import arute from './controller/arute';
 
 function mocking() {
    let result = mock.sircistic(
-      "Privilige itu omong kosong. Bilang aja lu iri sama bilioner"
+      'Privilige itu omong kosong. Bilang aja lu iri sama bilioner'
    );
    console.log(result);
 }
 
 const bot = {
+   arute_boot: async function() {
+      await tweet.setup('active 🔥');
+   },
+   arute_sleep: async function() {
+      await tweet.setup('sleep 🌙');
+   },
    arute_observe: function() {
-      let task = cron.schedule("*/1 * * * *", async () => {
-         // await observer.user("paswotnya");
-         await observer.mention()
-         await observer.process();
+      let task = cron.schedule('*/1 * * * *', async () => {
+         await mention.fetch();
+         await mention.consume();
+         await message.fetch();
+         await message.consume();
+      });
+      return task;
+   },
+   arute_txt: function() {
+      let task = cron.schedule('*/1 * * * *', async () => {
+         await mention.arute_txt();
       });
       return task;
    },
@@ -40,14 +54,14 @@ const bot = {
    },
    arute_message: function() {
       let task = cron.schedule(CONFIG.scheduler.arute_messages, async () => {
-         await message.get_messages();
-         await message.consume_messages();
+         await message.fetch();
+         await message.consume();
       });
       return task;
    },
    arute_jpg: function() {
       let task = cron.schedule(CONFIG.scheduler.arute_jpg, async () => {
-         await message.arute_jpg();
+         await arute.jpg();
       });
       return task;
    }

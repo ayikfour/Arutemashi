@@ -1,13 +1,12 @@
-import Path from "path";
-import download from "image-downloader";
-import chalk from "chalk";
+import Path from 'path';
+import download from 'image-downloader';
+import chalk from 'chalk';
 const log = console.log;
 
-async function photo(url = "", id = "") {
+async function photo(url = '', id = '') {
    try {
       let options = {
          url: url,
-         // dest: Path.resolve(__dirname, "../public/photos/", `${id}.jpg`)
          dest: `./src/public/photos/${id}.jpg`
       };
 

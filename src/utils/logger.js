@@ -1,63 +1,62 @@
-import chalk from "chalk";
-import moment from "moment";
+import chalk from 'chalk';
+import moment from 'moment';
 const log = console.log;
 
-export default function(context = "") {
-   var context = context.toUpperCase();
-   var padding = 10;
+export default function(context = '') {
+   context = context.toLowerCase();
+   var padding = 15;
+   var format = 'hh:mm:ss a';
 
    var logger = {
-      error: function(message = "") {
+      error: function(message = '') {
          var time = moment()
-            .format("h:mm:ss a")
+            .format(format)
             .toUpperCase();
 
          log(
             chalk.red(time),
-            "-",
-            chalk.magenta.bold(context.padEnd(padding)),
-            chalk.red("ERROR:"),
-            message
+            '-',
+            message,
+            chalk.magenta(context),
+            chalk.red.bold('error')
          );
          return this;
       },
-      success: function(message = "") {
+      success: function(message = '') {
          var time = moment()
-            .format("h:mm:ss a")
+            .format(format)
             .toUpperCase();
 
          log(
-            chalk.green(time),
-            "-",
-            chalk.magenta.bold(context.padEnd(padding)),
-            chalk.green("SUCCESS:"),
-            message
+            chalk.red(time),
+            '-',
+            message,
+            '/',
+            chalk.magenta(context),
+            chalk.green.bold('success')
          );
          return this;
       },
       header: function() {
          var time = moment()
-            .format("h:mm:ss a")
+            .format(format)
             .toUpperCase();
 
-         log(
-            chalk.magenta(time),
-            "-",
-            chalk.magenta.bold(context.padEnd(padding))
-         );
+         log(chalk.red(time), '-', chalk.magenta.bold(context.padEnd(padding)));
          return this;
       },
-      process: function(subcontext = "", message = "") {
+      process: function(subcontext = '', message = '') {
          var time = moment()
-            .format("h:mm:ss a")
+            .format(format)
             .toUpperCase();
 
          log(
-            chalk.yellow(time),
-            "-",
-            chalk.magenta.bold(context.padEnd(padding)),
-            chalk.yellow(subcontext.toUpperCase() + ":"),
-            message
+            chalk.red(time),
+            '-',
+            message,
+            '/',
+            chalk.magenta(context),
+            chalk.yellow.bold(subcontext.toLowerCase())
          );
          return this;
       }

@@ -1,32 +1,48 @@
-import CONFIG from "./src/config/config";
-import express from "express";
-import bot from "./src";
-import fetch from "node-fetch";
-import logger from "./src/utils/logger";
-import db from "./src/helper/database";
+import CONFIG from './src/config/config';
+import express from 'express';
+import bot from './src';
+import fetch from 'node-fetch';
+import logger from './src/utils/logger';
+import db from './src/helper/database';
+import routes from './src/routes';
 
 global.fetch = fetch;
 
 const app = express();
 
-app.listen(CONFIG.port, () => {
-   const log = logger("LISTENING");
+bot.arute_boot();
+
+const server = app.listen(CONFIG.port, () => {
+   const log = logger('listening');
    log.success(`Arutemashi is running on port ${CONFIG.port} 🔥`);
 });
 
-app.get("/messages", (req, res, next) => {
-   const messages = db.messages.get("messages").value();
-   res.status(200).json(messages);
-});
+app.use(routes);
 
-app.get("/", (req, res, next) => {
+app.get('/', (req, res, next) => {
    res.status(200).send({
       express: `Arutemashi is running on port ${CONFIG.port}`
    });
 });
 
-// bot.arute_jpg().start();
-// bot.arute_harvest().start();
-// bot.arute_message().start();
-// bot.delete_photos().start();
+process.on('exit', async function() {
+   server.close();
+   await bot.arute_sleep();
+   process.exit();
+});
+
+process.on('SIGINT', async function() {
+   server.close();
+   await bot.arute_sleep();
+   process.exit();
+});
+
+process.on('SIGTERM', async function() {
+   server.close();
+   await bot.arute_sleep();
+   process.exit();
+});
+
+bot.arute_jpg().start();
+bot.arute_harvest().start();
 bot.arute_observe().start();

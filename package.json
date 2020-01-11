@@ -5,7 +5,7 @@
    "main": "index.js",
    "scripts": {
       "start": "node -r esm index.js",
-      "test": "echo \"Error: no test specified\" && exit 1",
+      "test": "node -r esm ./test/tweet.js",
       "dev": "nodemon -r esm index.js"
    },
    "nodemonConfig": {
@@ -21,11 +21,11 @@
       "bcryptjs": "^2.4.3",
       "big-js": "^3.1.3",
       "chalk": "^3.0.0",
+      "clean-text-utils": "^1.1.17",
       "dotenv": "^8.2.0",
       "esm": "^3.2.25",
       "express": "^4.17.1",
       "image-downloader": "^3.5.0",
-      "jimp": "^0.8.5",
       "lowdb": "^1.0.0",
       "moment": "^2.24.0",
       "morgan": "^1.9.1",
@@ -33,9 +33,11 @@
       "node-fetch": "^2.6.0",
       "node-html-to-image": "^1.1.0",
       "nodemon": "^2.0.1",
-      "text-to-svg": "^3.1.5",
       "tumblr.js": "^2.0.2",
       "twit": "^2.2.11",
       "unsplash-js": "^6.0.0"
+   },
+   "devDependencies": {
+      "jest": "^24.9.0"
    }
 }
