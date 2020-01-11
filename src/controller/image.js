@@ -177,7 +177,7 @@ async function tumblr(caption) {
                <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
                <style>
                   .image {
-                  height: calc(100% - 48px);
+                  height: calc(100% - 32px);
                   width: inherit;  
                   background: url("${photo.urls.regular}&monochrome=${color}");
                   background-size: cover;
@@ -188,8 +188,8 @@ async function tumblr(caption) {
                   }
                   
                   .container{
-                  height:720px;
-                  width: 1080px;
+                  height: 405px;
+                  width: 720px;
                   display: flex;
                   flex-direction: column;
                   margin: 0 !important;
@@ -198,13 +198,14 @@ async function tumblr(caption) {
                   p {
                   font-family: 'Roboto', sans-serif;
                   text-align: center;
-                  font-size: 16px;
+                  font-size: 12px;
                   color: #ffd21f;
                   }
                   
                   p.words{
                   margin-bottom: 48px; 
                   overflow: hidden;
+                  font-size: 16px;
                   display: -webkit-box;
                   -webkit-line-clamp: 3;
                   -webkit-box-orient: vertical;
@@ -221,7 +222,7 @@ async function tumblr(caption) {
                   background: black;
                   display: flex;
                   justify-content: space-between;
-                  height: 48px;
+                  height: 32px;
                   align-items: center;
                   padding: 0 16 0 16;
                   }
@@ -234,7 +235,7 @@ async function tumblr(caption) {
                   p span{
                   padding-left: 5px;
                   padding-right: 5px;
-                  background: rgba(0, 0, 0, 0.2);
+                  background: rgba(0, 0, 0, 0.5);
                   }
                </style>
             </head>  
@@ -269,7 +270,7 @@ async function tumblr(caption) {
 
       const photo_b64 = await fs.readFileSync(path, { encoding: 'base64' });
       // delete files
-      await fs.unlinkSync(path);
+      // await fs.unlinkSync(path);
       return photo_b64;
    } catch (error) {
       throw error;

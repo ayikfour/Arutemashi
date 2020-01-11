@@ -44,7 +44,7 @@ async function from_message(message = {}) {
       const media_id = await tweet.upload(media);
 
       log.process('tweeting', `tweeting: ${text}`);
-      const status = `/arute.jpg - ${username}`;
+      const status = `/arute.jpg`;
 
       const tweet_id = await tweet.write(status, media_id);
    } catch (error) {
