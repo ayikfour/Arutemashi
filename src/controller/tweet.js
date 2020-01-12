@@ -60,13 +60,13 @@ function validate(code, text) {
    }
 }
 
-async function reply_to(tweet_id = '', status = '', media_id = '') {
+async function reply_to(tweet_id = '', status = '', media_id_string = '') {
    const log = logger('reply to');
    try {
       await twit.post('statuses/update', {
          in_reply_to_status_id: tweet_id,
          status: status,
-         media_id: media_id
+         media_ids: [media_id_string]
       });
    } catch (error) {
       log.error(error.message);
