@@ -66,7 +66,8 @@ async function reply_to(tweet_id = '', status = '', media_id_string = '') {
       await twit.post('statuses/update', {
          in_reply_to_status_id: tweet_id,
          status: status,
-         media_ids: [media_id_string]
+         media_ids: [media_id_string],
+         auto_populate_reply_metadata: true
       });
    } catch (error) {
       log.error(error.message);
