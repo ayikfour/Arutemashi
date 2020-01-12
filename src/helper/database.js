@@ -252,6 +252,12 @@ const photos = {
    get_photos: function() {
       return photos_db.get('photos').value();
    },
+   get_photo: function(id) {
+      return photos_db
+         .get('photos')
+         .find({ id: id })
+         .value();
+   },
    get_random_photo: function() {
       let photo = {};
       if (this.is_photo_empty()) {
@@ -294,6 +300,9 @@ const photos = {
    },
    update_total_page: function(number) {
       photos_db.update('total_page', total_page => total_page).write();
+   },
+   set_keywords: function(keywords) {
+      photos_db.update('keywords', current => keywords).write();
    },
    is_photo_empty: function() {
       return photos_db

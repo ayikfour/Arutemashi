@@ -9,18 +9,22 @@ async function trains() {
          return photo.id;
       });
 
-      console.log(names);
-
       let tags = db.photos.root.get('tags').value();
       tags = tags.map(tag => {
          return tag.join(' ');
       });
 
-      console.log(tags);
-
       const corpus = new Corpus(names, tags);
+      let query = corpus.getResultsForQuery('moody');
 
-      console.log(corpus.getResultsForQuery('mood'));
+      if (query.length == 0) {
+         throw new Error('there is no mathcing keywords');
+      }
+
+      let result = query.shift()[0];
+      let photo = db.photos.get_photo(result);
+      result = photo.tags.join(' ');
+      db.photos.set_keywords(result);
    } catch (error) {
       console.log(error);
    }
@@ -28,7 +32,7 @@ async function trains() {
 
 async function test() {
    try {
-      await image.polaroid(
+      await image.tumblr(
          'Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt Bangsatttttt'
       );
       console.log('done');
@@ -37,5 +41,5 @@ async function test() {
    }
 }
 
-test();
-// trains();
+// test();
+trains();

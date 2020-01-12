@@ -199,7 +199,7 @@ async function tumblr(caption) {
                   p {
                   font-family: 'Roboto', sans-serif;
                   text-align: center;
-                  font-size: 16px;
+                  font-size: 24px;
                   color: #ffd21f;
                   }
                   

@@ -31,6 +31,7 @@ module.exports = {
       arute_harvest: process.env.ARUTE_HARVEST || '*/1 * * * *',
       arute_txt: process.env.ARUTE_TXT || '*/1 * * * *',
       arute_observer: process.env.ARUTE_OBSERVER || '*/2 * * * *'
+      arute_train: process.env.ARUTE_TRAIN || '0 */5 * * *'
    },
    error_code: {
       179: 'sir, this is private account 🤷‍♂️',

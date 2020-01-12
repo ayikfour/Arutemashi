@@ -6,6 +6,7 @@ import CONFIG from './config/config';
 import mention from './controller/mention';
 import tweet from './controller/tweet';
 import arute from './controller/arute';
+import train from './controller/train';
 
 function mocking() {
    let result = mock.sircistic(
@@ -27,6 +28,12 @@ const bot = {
          await mention.consume();
          await message.fetch();
          await message.consume();
+      });
+      return task;
+   },
+   arute_train: function() {
+      let task = cron.schedule(CONFIG.scheduler.arute_train, () => {
+         train.tags();
       });
       return task;
    },
