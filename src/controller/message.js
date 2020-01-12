@@ -77,7 +77,6 @@ async function consume() {
             text = stripper.strip.emoji(text);
             text = stripper.replace.diacritics(text);
             text = stripper.replace.smartChars(text);
-            text = stripper.strip.newlines(text);
             // save to texts array in database
 
             db.messages.add_text({ text, user_id, selector, source });
