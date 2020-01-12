@@ -41,5 +41,5 @@ async function test() {
    }
 }
 
-// test();
-trains();
+test();
+// trains();

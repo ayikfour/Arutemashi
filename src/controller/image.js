@@ -198,15 +198,16 @@ async function tumblr(caption) {
                   
                   p {
                   font-family: 'Roboto', sans-serif;
+                  font-style: italic;
                   text-align: center;
-                  font-size: 24px;
+                  font-size: 32px;
                   color: #ffd21f;
                   }
                   
                   p.words{
                   margin-bottom: 48px; 
                   overflow: hidden;
-                  font-size: 24px;
+                  font-size: 32px;
                   display: -webkit-box;
                   -webkit-line-clamp: 3;
                   -webkit-box-orient: vertical;
