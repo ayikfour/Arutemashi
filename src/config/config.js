@@ -48,9 +48,11 @@ module.exports = {
       'Lah ga ngefollow nyuruh nyuruh 🙂'
    ],
    selector: {
-      arute_jpg: '/arute.jpg/',
-      sarcastify: '/sarcastify/',
-      sircistify: '/sircistify/',
-      arute_txt: /(\/sircistify\/|\/sarcastify\/)/
+      type: /(\/polaroid|\/tumblr)/g,
+      mock: /(\/hah)/g
+   },
+   trigger: {
+      arute_jpg: /(\/arute.jpg)/g,
+      mock: /(\/mock)/g
    }
 };

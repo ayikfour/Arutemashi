@@ -82,6 +82,7 @@ async function consume() {
          return;
       }
       log.process('processing', `there is ${new_tweet.length} new tweet`);
+
       //iterating new tweets to process
       new_tweet.map((current_tweet, index) => {
          //destructuring tweet into single item
@@ -94,43 +95,32 @@ async function consume() {
             in_reply_to_user_id_str,
             followed_by
          } = current_tweet;
-
          //regex selector to match /sarcastify/ or /sircistify/
-         let split = text.split(' ');
 
-         //check if selector match with string.
-         //if no return
-         if (split[1] != '/arute.jpg') {
-            db.tweets.move(id_str);
-            return;
-         }
-
-         let selector = split[2];
-         if (selector != '/polaroid' && selector != '/tumblr') {
-            db.tweets.move(id_str);
-            return;
-         }
-
-         //attachment url. tweet to quotes
-         let attachment_url = tweet.build.tweet_url(
-            in_reply_to_status_id_str,
-            in_reply_to_screen_name
-         );
-
+         let selector = '';
          let source = 'mention';
 
-         //add processed tweet to the database
-         db.messages.add_text({
-            selector: selector,
+         let temp = {
             requester: screen_name,
             source: source,
             target_tweet_id: in_reply_to_status_id_str,
             target_user_id: in_reply_to_user_id_str,
             id_str,
-            attachment_url,
             followed_by
-         });
+         };
 
+         if (is_jpg(text)) {
+            selector = text.match(CONFIG.selector.type);
+            db.messages.add_text({ ...temp, selector: selector[0] });
+         } else if (is_mock(text)) {
+            selector = text.match(CONFIG.selector.mock);
+            db.tweets.add_text({ ...temp, selector: selector[0] });
+         } else {
+            db.tweets.move(id_str);
+            return;
+         }
+
+         //add processed tweet to the database
          //move processed tweet to old
          db.tweets.move(id_str);
          log.process('consuming', `${text} `);
@@ -138,6 +128,38 @@ async function consume() {
       log.success(`${new_tweet.length} tweets has been processed`);
    } catch (error) {
       log.error(error);
+   }
+}
+
+function is_jpg(text = '') {
+   try {
+      let trigger = text.match(CONFIG.trigger.arute_jpg);
+      let selector = text.match(CONFIG.selector.type);
+      //check if selector match with string.
+      //if no return
+      if (!selector || !trigger) {
+         return false;
+      } else {
+         return true;
+      }
+   } catch (error) {
+      throw error;
+   }
+}
+
+function is_mock(text = '') {
+   try {
+      let trigger = text.match(CONFIG.trigger.mock);
+      let selector = text.match(CONFIG.selector.mock);
+      //check if selector match with string.
+      //if no return
+      if (!selector || !trigger) {
+         return false;
+      } else {
+         return true;
+      }
+   } catch (error) {
+      throw error;
    }
 }
 
@@ -165,35 +187,6 @@ async function arute_txt() {
       db.tweets.move_text(text.source);
    } catch (error) {
       log.error(error.message, error.status_code);
-   }
-}
-
-function hurt_myself(target_user_id = '') {
-   if (
-      target_user_id === CONFIG.twitter.id_kamisama ||
-      target_user_id === CONFIG.twitter.id_self
-   ) {
-      return true;
-   } else {
-      return false;
-   }
-}
-
-async function mock_back(text) {
-   const log = logger('mock back');
-   try {
-      let status = '';
-
-      if (text.target_user_id === CONFIG.twitter.id_kamisama) {
-         status = "sorry, you imbecile I won't mock my kamisama 🥵";
-      } else if (text.target_user_id === CONFIG.twitter.id_self) {
-         status = 'LOL dumb bitch try again later 🤣';
-      }
-
-      await tweet.reply_to(text.source, text.requester, status);
-      log.success(`mocking back this user ${text.requester}`);
-   } catch (error) {
-      throw error;
    }
 }
 

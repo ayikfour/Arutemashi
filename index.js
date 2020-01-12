@@ -49,6 +49,7 @@ process.on('SIGTERM', async function() {
 });
 
 bot.arute_jpg().start();
+bot.arute_txt().start();
 bot.arute_harvest().start();
 bot.arute_observe().start();
 bot.arute_train().start();

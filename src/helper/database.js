@@ -220,10 +220,10 @@ const tweets = {
          .isEmpty()
          .value();
    },
-   move_text: function(source = '') {
+   move_text: function(id_str = '') {
       let text = tweets_db
          .get('texts')
-         .find({ source: source })
+         .find({ id_str: id_str })
          .value();
 
       tweets_db
@@ -233,7 +233,7 @@ const tweets = {
 
       tweets_db
          .get('texts')
-         .remove({ source: source })
+         .remove({ id_str: id_str })
          .write();
    }
 };

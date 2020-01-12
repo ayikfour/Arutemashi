@@ -38,8 +38,8 @@ const bot = {
       return task;
    },
    arute_txt: function() {
-      let task = cron.schedule('*/1 * * * *', async () => {
-         await mention.arute_txt();
+      let task = cron.schedule(CONFIG.scheduler.arute_txt, async () => {
+         await arute.txt();
       });
       return task;
    },
