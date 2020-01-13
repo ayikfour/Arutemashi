@@ -67,7 +67,7 @@ async function consume() {
          if (selector) {
             let source = 'message';
 
-            text = text.replace(CONFIG.selector.arute_jpg);
+            text = text.replace(CONFIG.selector.arute_jpg, '');
             text = stripper.strip.emoji(text);
             text = stripper.strip.extraSpace(text);
             text = stripper.replace.smartChars(text);

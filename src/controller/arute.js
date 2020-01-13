@@ -46,7 +46,7 @@ async function from_message(message = {}) {
       const media_id = await tweet.upload(media);
 
       log.process('tweeting', `tweeting: ${text}`);
-      const status = `/arute.jpg`;
+      const status = `/arute.jpg - ${selector}`;
 
       const tweet_id = await tweet.write(status, media_id);
    } catch (error) {
@@ -78,7 +78,7 @@ async function from_mention(message = {}) {
       const media_id = await tweet.upload(media);
 
       log.process('tweeting', `tweeting: ${text}`);
-      await tweet.reply_to(id_str, `/arute.jpg`, media_id);
+      await tweet.reply_to(id_str, `/arute.jpg - ${selector}`, media_id);
    } catch (error) {
       throw error;
    }

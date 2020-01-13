@@ -51,7 +51,7 @@ async function test() {
       // await mention.fetch();
       // await arute.txt();
 
-      await message.fetch();
+      await message.consume();
       // await image.story('bacot ngentoott');
    } catch (error) {
       console.log(error);
