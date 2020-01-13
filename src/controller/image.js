@@ -269,6 +269,112 @@ async function tumblr(caption) {
    }
 }
 
+async function story(caption) {
+   try {
+      let photo = db.photos.get_random_photo();
+      const path = `./src/public/drawen/${photo.id}.jpg`;
+      const color = '4E4E4E';
+      await canvas({
+         output: path,
+         html: `
+         <html lang="en">
+            <head>
+               <title>Hello!</title>
+               <link href="https://fonts.googleapis.com/css?family=Roboto:300i,400i&display=swap" rel="stylesheet">
+               <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+               <style>
+                  .image {
+                  height: inherit;
+                  width: inherit;  
+                  background: url("${photo.urls.regular}&monochrome=${color}");
+                  background-size: cover;
+                  background-position: center;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  }
+                  
+                  .container{
+                  height: 1280px;
+                  width: 720px;
+                  display: flex;
+                  flex-direction: column;
+                  margin: 0 !important;
+                  }
+                  
+                  p {
+                  font-family: 'Roboto', sans-serif;
+                  font-style: italic;
+                  text-align: center;
+                  font-size: 24px;
+                  color: #ffd21f;
+                  }
+                  
+                  p.words{
+                  margin-bottom: 48px; 
+                  overflow: hidden;
+                  font-size: 24px;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 3;
+                  -webkit-box-orient: vertical;
+                  }
+                  
+                  p.title{
+                  font-family: 'Poppins', sans-serif;
+                  font-weight: 700;
+                  opacity: 0.5;
+                  color: white;
+                  }
+                  
+                  .credit-container{
+                  background: black;
+                  display: flex;
+                  justify-content: space-between;
+                  height: 32px;
+                  align-items: center;
+                  padding: 0 16 0 16;
+                  }
+                  
+                  .unsplash-container{
+                  opacity: 0.5;
+                  color: white;
+                  }
+                  
+                  p span{
+                  padding-left: 5px;
+                  padding-right: 5px;
+                  background: rgba(0, 0, 0, 0.5);
+                  }
+               </style>
+            </head>  
+            <body class="container">  
+               <div class="image">
+                  <p class="words">
+                  <span>
+                     ${caption}
+                  </span>
+                  </p>
+               </div>
+             
+            </body>
+         </html>
+         `,
+         waitUntil: ['load', 'networkidle0'],
+         puppeteerArgs: {
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+         }
+      });
+
+      const photo_b64 = await fs.readFileSync(path, { encoding: 'base64' });
+      // delete files
+      await fs.unlinkSync(path);
+      return photo_b64;
+   } catch (error) {
+      throw error;
+   }
+}
+
 async function get(selector, caption) {
    try {
       switch (selector) {
@@ -283,4 +389,4 @@ async function get(selector, caption) {
       throw error;
    }
 }
-export default { polaroid, tumblr, get };
+export default { polaroid, tumblr, story, get };

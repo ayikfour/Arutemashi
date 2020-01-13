@@ -53,12 +53,6 @@ const bot = {
       });
       return task;
    },
-   delete_photos: function() {
-      let task = cron.schedule(CONFIG.scheduler.delete_photos, async () => {
-         await unsplash.delete_photos();
-      });
-      return task;
-   },
    arute_message: function() {
       let task = cron.schedule(CONFIG.scheduler.arute_messages, async () => {
          await message.fetch();

@@ -66,9 +66,6 @@ const messages = {
    },
    set_new: function(fetched = []) {
       // check if old messages array already have same event/message
-      // this process return distinct message from old messages array
-
-      // then union it with new messages array
       const news = fetched.filter(message => {
          let is_exist = messages_db
             .get('old')
@@ -101,10 +98,7 @@ const messages = {
    },
    set_cursor: function(next_cursor = 0) {
       if (next_cursor == 0) return;
-      messages_db
-         .get('cursor')
-         .assign(next_cursor)
-         .write();
+      messages_db.update('cursor', cursor => next_cursor).write();
    },
    add_text: function(text = {}) {
       messages_db

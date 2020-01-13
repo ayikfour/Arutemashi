@@ -95,7 +95,7 @@ async function setup(status = '') {
 status: ${status}
 mundane things.
 ––––
-dm & mention trigger: /arute.jpg
+Update - Check pinned tweet. 
 follow first to use.
          `
       };
@@ -130,6 +130,12 @@ const build = {
    tweet_url: function(tweet_id, screen_name) {
       return `https://twitter.com/${screen_name}/status/${tweet_id}`;
    },
+   clean: function(string = '') {
+      string = string.replace(/(https?|chrome):\/\/[^\s$.?#].[^\s]*/gm, '');
+      string = string.replace(/(@\w*)/gm, '').trim();
+      string = striper.strip.extraSpace(string);
+      return string;
+   },
    tweets: function(tweets = []) {
       try {
          const cleaned_tweets = tweets.map(tweet => {
@@ -154,10 +160,7 @@ const build = {
             user: { screen_name, id: user_id, followed_by }
          } = tweet;
 
-         let text = full_text.replace(
-            /(https?|chrome):\/\/[^\s$.?#].[^\s]*/gm,
-            ''
-         );
+         let text = this.clean(full_text);
 
          return {
             id,

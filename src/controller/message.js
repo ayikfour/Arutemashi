@@ -35,7 +35,7 @@ async function fetch() {
       db.messages.set_new(events);
 
       //Writing next counter to messages db
-      db.messages.set_cursor(next_cursor);
+      // db.messages.set_cursor(next_cursor);
 
       log.success('getting messages is done');
    } catch (error) {
@@ -61,25 +61,23 @@ async function consume() {
          let id = event.id;
          let text = event.message_create.message_data.text;
          let user_id = event.message_create.sender_id;
-         let split = text.split(' ');
+         let selector = text.match(CONFIG.selector.arute_jpg);
 
          // check wether the string contain right tokens
-         if (split[0] == '/arute.jpg') {
-            let selector = split[1];
+         if (selector) {
             let source = 'message';
 
-            if (selector != '/polaroid' && selector != '/tumblr') {
-               return;
-            }
-
-            split.splice(0, 2);
-            text = split.join(' ');
             text = stripper.strip.emoji(text);
             text = stripper.replace.diacritics(text);
             text = stripper.replace.smartChars(text);
             // save to texts array in database
 
-            db.messages.add_text({ text, user_id, selector, source });
+            db.messages.add_text({
+               text,
+               user_id,
+               selector: selector[0],
+               source
+            });
          }
 
          // movin message from new messages array

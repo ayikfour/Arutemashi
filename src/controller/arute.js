@@ -34,12 +34,13 @@ async function from_message(message = {}) {
 
    try {
       const { text, user_id, selector } = message;
+      selector = selector.replace('/', '');
 
       log.process('fetching', 'fetch username based on id');
       const username = await tweet.get_username(user_id);
 
       log.process('drawing', 'caption on photo');
-      const media = await image.get(selector, text);
+      const media = await image[`${selector}`](text);
 
       log.process('uploading', 'media to twitter');
       const media_id = await tweet.upload(media);
@@ -57,6 +58,7 @@ async function from_mention(message = {}) {
    const log = logger('arute.jpg');
    try {
       const { selector, target_tweet_id, id_str, followed_by } = message;
+      selector = selector.replace('/', '');
 
       await check_follow(followed_by, id_str, message.requester);
 
@@ -70,7 +72,7 @@ async function from_mention(message = {}) {
       }
 
       log.process('drawing', 'caption on photo');
-      let media = await image.get(selector, text);
+      const media = await image[`${selector}`](text);
 
       log.process('uploading', 'media to twitter');
       const media_id = await tweet.upload(media);
@@ -114,7 +116,7 @@ async function txt() {
          let selector = text.selector.replace('/', '');
          log.process('get tweet', content.text.substring(0, 15));
          let status = mock[`${selector}`](content.text, content.screen_name);
-         log.process('mocking', status.substring(0, 15));
+         log.process('mocking', status);
          let result = await tweet.reply_to(text.id_str, status);
          log.success(`mocking by ${text.requester} has been sent`);
       }

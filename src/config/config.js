@@ -48,11 +48,12 @@ module.exports = {
       'Lah ga ngefollow nyuruh nyuruh 🙂'
    ],
    selector: {
-      type: /(\/polaroid|\/tumblr)/g,
-      mock: /(\/hah)/g
+      arute_jpg: /\B\/polaroid\b|\B\/tumblr\b|\B\/story\b/,
+      mock: /\B\/hah\b|\B\/hilih\b|\B\/lapo\b|\B\/emosi\b/
    },
    trigger: {
-      arute_jpg: /(\/arute.jpg)/g,
-      mock: /(\/mock)/g
+      // arute_jpg: /(\/arute.jpg)/g,
+      arute_jpg: /\bpolaroid|tumblr|story\b/,
+      mock: /\bhah|hilih|lapo|emosi\b/
    }
 };

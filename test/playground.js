@@ -1,6 +1,7 @@
 import tweet from '../src/controller/tweet';
 import image from '../src/controller/image';
 import mention from '../src/controller/mention';
+import message from '../src/controller/message';
 import { Corpus, Document, Similarity } from 'tiny-tfidf';
 import arute from '../src/controller/arute';
 import db from '../src/helper/database';
@@ -45,9 +46,13 @@ async function draw() {
 
 async function test() {
    try {
+      // const result = await tweet.get_tweet('1212203254034993152');
+      // console.log(result);
       // await mention.fetch();
-      // await mention.consume();
-      await arute.txt();
+      // await arute.txt();
+
+      await message.fetch();
+      // await image.story('bacot ngentoott');
    } catch (error) {
       console.log(error);
    }

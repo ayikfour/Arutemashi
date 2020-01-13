@@ -110,11 +110,11 @@ async function consume() {
          };
 
          if (is_jpg(text)) {
-            selector = text.match(CONFIG.selector.type);
-            db.messages.add_text({ ...temp, selector: selector[0] });
+            [selector] = text.match(CONFIG.selector.type);
+            db.messages.add_text({ ...temp, selector: selector });
          } else if (is_mock(text)) {
-            selector = text.match(CONFIG.selector.mock);
-            db.tweets.add_text({ ...temp, selector: selector[0] });
+            [selector] = text.match(CONFIG.selector.mock);
+            db.tweets.add_text({ ...temp, selector: selector });
          } else {
             db.tweets.move(id_str);
             return;
@@ -133,11 +133,8 @@ async function consume() {
 
 function is_jpg(text = '') {
    try {
-      let trigger = text.match(CONFIG.trigger.arute_jpg);
-      let selector = text.match(CONFIG.selector.type);
-      //check if selector match with string.
-      //if no return
-      if (!selector || !trigger) {
+      let selector = text.match(CONFIG.selector.arute_jpg);
+      if (!selector) {
          return false;
       } else {
          return true;
@@ -149,11 +146,8 @@ function is_jpg(text = '') {
 
 function is_mock(text = '') {
    try {
-      let trigger = text.match(CONFIG.trigger.mock);
       let selector = text.match(CONFIG.selector.mock);
-      //check if selector match with string.
-      //if no return
-      if (!selector || !trigger) {
+      if (!selector) {
          return false;
       } else {
          return true;
@@ -163,31 +157,4 @@ function is_mock(text = '') {
    }
 }
 
-async function arute_txt() {
-   const log = logger('arute.txt');
-   try {
-      if (db.tweets.is_texts_empty()) {
-         throw new Error('there is no new texts');
-      }
-
-      let text = db.tweets.get_text();
-
-      if (hurt_myself(text.target_user_id)) {
-         log.process('hurt self', 'this user try to mock me');
-         // await mock_back(text);
-      } else {
-         let content = await tweet.get_tweet(text.target_tweet_id);
-         log.process('get tweet', content.text);
-         let status = mock[`${text.selector}`](content.text);
-         log.process('mocking', status);
-         // let result = await Tweet.quote(status, text.attachment_url);
-         // await Tweet.reply_to(result, text.requester);
-         // log.success(`mocking by ${text.requester} has been sent`);
-      }
-      db.tweets.move_text(text.source);
-   } catch (error) {
-      log.error(error.message, error.status_code);
-   }
-}
-
-export default { fetch, consume, arute_txt };
+export default { fetch, consume };

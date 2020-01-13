@@ -10,13 +10,29 @@ export default {
       const text = `${transformed.substring(
          0,
          160
-      )}... \n hasshhh cangkeman @${screen_name} 🙄`;
+      )}... \n\nhasshhh cangkeman @${screen_name} 🙄`;
 
       return text;
    },
-   sircistify: function(content = '') {
-      return [...content.toLowerCase()]
+   hilih: function(content = '', screen_name) {
+      const transformed = [...content.toLowerCase()]
          .map(char => (['a', 'i', 'u', 'e', 'o'].includes(char) ? 'i' : char))
          .join('');
+
+      const text = `${transformed.substring(
+         0,
+         160
+      )}... \n\nhilih jimbit @${screen_name} 🥵`;
+
+      return text;
+   },
+   lapo: function() {
+      return `kon haus afeksi ta lur? 🙄`;
+   },
+   goblok: function() {
+      return `lah goblok, utekke nan silit 🥵`;
+   },
+   emosi: function(screen_name) {
+      return `kalo ga ngetweet gini kamu darah rendah ya bangsat @${screen_name} 🙂`;
    }
 };
