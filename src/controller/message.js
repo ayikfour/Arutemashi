@@ -67,11 +67,12 @@ async function consume() {
          if (selector) {
             let source = 'message';
 
+            text = text.replace(CONFIG.selector.arute_jpg);
             text = stripper.strip.emoji(text);
-            text = stripper.replace.diacritics(text);
+            text = stripper.strip.extraSpace(text);
             text = stripper.replace.smartChars(text);
-            // save to texts array in database
 
+            // save to texts array in database
             db.messages.add_text({
                text,
                user_id,

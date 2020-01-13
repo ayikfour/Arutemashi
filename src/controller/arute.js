@@ -33,7 +33,7 @@ async function from_message(message = {}) {
    const log = logger('arute.jpg');
 
    try {
-      const { text, user_id, selector } = message;
+      let { text, user_id, selector } = message;
       selector = selector.replace('/', '');
 
       log.process('fetching', 'fetch username based on id');
@@ -57,7 +57,7 @@ async function from_message(message = {}) {
 async function from_mention(message = {}) {
    const log = logger('arute.jpg');
    try {
-      const { selector, target_tweet_id, id_str, followed_by } = message;
+      let { selector, target_tweet_id, id_str, followed_by } = message;
       selector = selector.replace('/', '');
 
       await check_follow(followed_by, id_str, message.requester);
