@@ -49,7 +49,7 @@ module.exports = {
    ],
    selector: {
       arute_jpg: /\B\/polaroid\b|\B\/tumblr\b|\B\/story\b/,
-      mock: /\B\/hah\b|\B\/hilih\b|\B\/lapo\b|\B\/emosi\b/
+      mock: /\B\/hah\b|\B\/hilih\b|\B\/lapo\b|\B\/emosi\b|\B\/goblok\b/
    },
    trigger: {
       // arute_jpg: /(\/arute.jpg)/g,

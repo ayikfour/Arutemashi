@@ -26,13 +26,13 @@ export default {
 
       return text;
    },
-   lapo: function() {
-      return `kon haus afeksi ta lur? 🙄`;
+   lapo: function(content, screen_name) {
+      return `cek opo seh kon ngeneki ha ${screen_name} 🙄`;
    },
-   goblok: function() {
-      return `lah goblok, utekke nan silit 🥵`;
+   goblok: function(content, screen_name) {
+      return `lah goblok ${screen_name}, utekke nan silit 🥵`;
    },
-   emosi: function(screen_name) {
+   emosi: function(content, screen_name) {
       return `kalo ga ngetweet gini kamu darah rendah ya bangsat @${screen_name} 🙂`;
    }
 };
