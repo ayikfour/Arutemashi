@@ -36,9 +36,6 @@ async function from_message(message = {}) {
       let { text, user_id, selector } = message;
       selector = selector.replace('/', '');
 
-      log.process('fetching', 'fetch username based on id');
-      const username = await tweet.get_username(user_id);
-
       log.process('drawing', 'caption on photo');
       const media = await image[`${selector}`](text);
 

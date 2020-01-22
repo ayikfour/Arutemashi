@@ -110,7 +110,7 @@ async function consume() {
          };
 
          if (is_jpg(text)) {
-            [selector] = text.match(CONFIG.selector.type);
+            [selector] = text.match(CONFIG.selector.arute_jpg);
             db.messages.add_text({ ...temp, selector: selector });
          } else if (is_mock(text)) {
             [selector] = text.match(CONFIG.selector.mock);

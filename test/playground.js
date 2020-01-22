@@ -48,10 +48,11 @@ async function test() {
    try {
       // const result = await tweet.get_tweet('1212203254034993152');
       // console.log(result);
+      // await mention.consume();
       // await mention.fetch();
-      // await arute.txt();
-
-      await message.consume();
+      await arute.jpg();
+      // console.log(image.random_id());
+      // await message.consume();
       // await image.story('bacot ngentoott');
    } catch (error) {
       console.log(error);

@@ -62,6 +62,7 @@ async function consume() {
          let text = event.message_create.message_data.text;
          let user_id = event.message_create.sender_id;
          let selector = text.match(CONFIG.selector.arute_jpg);
+         let media_url_https = get_media_url(event);
 
          // check wether the string contain right tokens
          if (selector) {
@@ -77,7 +78,8 @@ async function consume() {
                text,
                user_id,
                selector: selector[0],
-               source
+               source,
+               media_url_https
             });
          }
 
@@ -92,6 +94,28 @@ async function consume() {
    }
 }
 
+function get_media_url(event) {
+   try {
+      let { message_create } = event;
+      if (!message_create) return null;
+
+      let { message_data } = message_create;
+      if (!message_data) return null;
+
+      let { attachment } = message_data;
+      if (!attachment) return null;
+
+      let { media } = attachment;
+      if (!media) return null;
+
+      let { media_url_https } = media;
+      if (!media_url_https) return null;
+
+      return media_url_https + ':large';
+   } catch (error) {
+      throw error;
+   }
+}
 export default {
    fetch,
    consume

@@ -3,11 +3,11 @@ import unsplash from './unsplash';
 import canvas from 'node-html-to-image';
 import db from '../helper/database';
 
-async function polaroid(caption = '') {
+async function polaroid(caption = '', photo) {
    try {
-      let photo = db.photos.get_random_photo();
-      const path = `./src/public/drawen/${photo.id}.jpg`;
-      const color = '4E4E4E';
+      photo = get_url(photo);
+      const id = get_random_id();
+      const path = `./src/public/drawen/${id}.jpg`;
       await canvas({
          output: path,
          html: `
@@ -42,7 +42,7 @@ async function polaroid(caption = '') {
                      width: inherit;
                      height: inherit;
                      min-height: calc(100% - 240px);
-                     background-image: url("${photo.urls.regular}&monochrome=${color}");
+                     background-image: url("${photo}");
                      background-size: cover;
                      background-position: center;
                      display: inline-flex;
@@ -139,7 +139,7 @@ async function polaroid(caption = '') {
                         arutemashi /.
                      </p>
                      <p class="credit-container">
-                        <span class="unsplash">unsplash</span>•<span class="author-container">photo by <span class="author">${photo.user}</span></span>
+                        <span class="unsplash">unsplash</span>•<span class="author-container">photo by <span class="author">arutemashi</span></span>
                      </p>
                   </div>
                   </div>
@@ -163,10 +163,11 @@ async function polaroid(caption = '') {
    }
 }
 
-async function tumblr(caption) {
+async function tumblr(caption = '', photo) {
    try {
-      let photo = db.photos.get_random_photo();
-      const path = `./src/public/drawen/${photo.id}.jpg`;
+      photo = get_url(photo);
+      const id = get_random_id();
+      const path = `./src/public/drawen/${id}.jpg`;
       const color = '4E4E4E';
       await canvas({
          output: path,
@@ -180,7 +181,7 @@ async function tumblr(caption) {
                   .image {
                   height: inherit;
                   width: inherit;  
-                  background: url("${photo.urls.regular}&monochrome=${color}");
+                  background: url("${photo}");
                   background-size: cover;
                   background-position: center;
                   display: flex;
@@ -262,17 +263,18 @@ async function tumblr(caption) {
 
       const photo_b64 = await fs.readFileSync(path, { encoding: 'base64' });
       // delete files
-      await fs.unlinkSync(path);
+      // await fs.unlinkSync(path);
       return photo_b64;
    } catch (error) {
       throw error;
    }
 }
 
-async function story(caption) {
+async function story(caption = '', photo) {
    try {
-      let photo = db.photos.get_random_photo();
-      const path = `./src/public/drawen/${photo.id}.jpg`;
+      photo = get_url(photo);
+      const id = get_random_id();
+      const path = `./src/public/drawen/${id}.jpg`;
       const color = '4E4E4E';
       await canvas({
          output: path,
@@ -286,7 +288,7 @@ async function story(caption) {
                   .image {
                   height: inherit;
                   width: inherit;  
-                  background: url("${photo.urls.regular}&monochrome=${color}");
+                  background: url("${photo}");
                   background-size: cover;
                   background-position: center;
                   display: flex;
@@ -373,6 +375,29 @@ async function story(caption) {
    } catch (error) {
       throw error;
    }
+}
+
+function get_url(photo) {
+   try {
+      if (photo) {
+         return photo;
+      }
+      photo = db.photos.get_random_photo();
+      let url = photo.urls.regular + '&monochrome=4E4E4E';
+      return url;
+   } catch (error) {
+      throw error;
+   }
+}
+
+function get_random_id() {
+   let random = [];
+   let alphanum = [...'abcdefghijklmnopqrstuvwxyz12345678910'];
+   for (let index = 0; index < 7; index++) {
+      let element = alphanum[Math.floor(Math.random() * alphanum.length)];
+      random.push(element);
+   }
+   return random.join('');
 }
 
 async function get(selector, caption) {
